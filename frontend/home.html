@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>对话演示</title>
+    <style>
+        #chat-box { border: 1px solid #ddd; padding: 10px; height: 300px; width: 400px; overflow-y: auto; }
+        #input { width: 320px; }
+        .user { color: blue; margin: 5px 0;}
+        .bot { color: green; margin: 5px 0;}
+    </style>
+</head>
+<body>
+    <h2>FastAPI 聊天窗口</h2>
+    <div id="chat-box"></div>
+    <input id="input" type="text" placeholder="输入您要说的话" onkeydown="if(event.key==='Enter'){sendMsg()}">
+    <button onclick="sendMsg()">发送</button>
+
+    <script>
+        function appendMsg(who, text) {
+            let div = document.getElementById('chat-box');
+            let p = document.createElement('div');
+            p.className = who;
+            p.innerText = (who === 'user' ? '你: ' : 'LLM: ') + text;
+            div.appendChild(p);
+            div.scrollTop = div.scrollHeight;
+        }
+
+        function sendMsg() {
+            let text = document.getElementById('input').value.trim();
+            if(!text) return;
+            appendMsg('user', text);
+            document.getElementById('input').value = "";
+
+            fetch('http://127.0.0.1:8000/chat', {
+                method: 'POST',
+                headers: {'Content-Type':'application/json'},
+                body: JSON.stringify({text: text})
+            })
+            .then(res => res.json())
+            .then(data => {
+                appendMsg('bot', data.reply);
+            })
+            .catch(err => {
+                appendMsg('bot', '[请求失败！]');
+            });
+        }
+    </script>
+</body>
+</html>
