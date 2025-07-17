@@ -4,9 +4,10 @@ import sys
 import re
 import json
 from prompt import PROMPTS
+from retrieval_db import get_db
 
-from langchain_openai import ChatOpenAI, OpenAIEmbeddings
-from langchain_community.embeddings import VolcanoEmbeddings
+from langchain_openai import ChatOpenAI
+
 from langchain_chroma import Chroma
 
 from langchain_core.prompts import ChatPromptTemplate, MessagesPlaceholder
@@ -24,7 +25,7 @@ from langchain_core.messages import BaseMessage, AIMessage
 # file_path = "/home/jinyutong/nkocl_code/cuda_code.py"
 file_questions = "./{标准问答对的位置}"
 CHROMA_DIR_PATH = "./chroma"
-RELEVANCE_THRESHOLD = 0.5
+
 load_dotenv()
 store = {}
 terminal_stdout = sys.stdout
@@ -48,30 +49,6 @@ def get_by_session_id(session_id: str) -> BaseChatMessageHistory:
     if session_id not in store:
         store[session_id] = InMemoryHistory()
     return store[session_id]
-
-def get_db(query):
-    embedding_fn = OpenAIEmbeddings(
-        model="Pro/BAAI/bge-m3",
-        openai_api_key = os.environ.get("SILI_API_KEY"),
-        openai_api_base ="https://api.siliconflow.cn/v1"
-    ) # 嵌入式模型
-    db_chroma = Chroma(collection_name = "chromadb", persist_directory=CHROMA_DIR_PATH, embedding_function=embedding_fn)
-
-    print("Querying the vector db ....")
-    # Search vector DB
-    # 返回匹配程度最高的25个块
-    results1 = db_chroma.similarity_search_with_score(query, 25)
-
-    print(f"Length of results {len(results1)}")
-
-    if len(results1) == 0 or results1[0][1] < RELEVANCE_THRESHOLD:
-        # 这一步检索了 客户的问题与当前知识库的相关性
-        return 0
-
-    # context_text1 = "\n\n---\n\n".join([f"Score: {_score}\n{doc.page_content}"  for doc, _score in results1])
-    context_text1 = "\n\n---\n\n".join([doc.page_content for doc, _score in results1])
-    print(context_text1)
-    return context_text1
 
 def query_rag(query, client_ip):
     # Init vector DB
