@@ -6,8 +6,8 @@ import json
 from prompt import PROMPTS
 from retrieval_db import get_db
 
-from langchain_openai import ChatOpenAI
-
+from langchain_openai import ChatOpenAI, OpenAIEmbeddings
+from langchain_community.embeddings import VolcanoEmbeddings
 from langchain_chroma import Chroma
 
 from langchain_core.prompts import ChatPromptTemplate, MessagesPlaceholder
@@ -22,13 +22,28 @@ from pydantic import BaseModel, Field
 from typing import List
 from langchain_core.messages import BaseMessage, AIMessage
 
-# file_path = "/home/jinyutong/nkocl_code/cuda_code.py"
+from typing import Annotated
+
+from langchain.chat_models import init_chat_model
+from typing_extensions import TypedDict
+
+from langgraph.graph import StateGraph, START, END
+from langgraph.graph.message import add_messages
+
+
 file_questions = "./{标准问答对的位置}"
 CHROMA_DIR_PATH = "./chroma"
 
 load_dotenv()
 store = {}
 terminal_stdout = sys.stdout
+
+class State(TypedDict):
+    messages: Annotated[list, add_messages]
+
+
+graph_builder = StateGraph(State)
+
 
 class InMemoryHistory(BaseChatMessageHistory, BaseModel):
     """In memory implementation of chat message history."""
@@ -44,13 +59,67 @@ class InMemoryHistory(BaseChatMessageHistory, BaseModel):
 
 # Here we use a global variable to store the chat message history.
 # This will make it easier to inspect it to see the underlying results.
+def chatbot(state: State):
+    query = state["messages"][-1].content
+    context_text1 = get_db(query)
+    if context_text1 == 0:
+        unrelated = "No corresponding content found. If you have any questions, please consult a professional."
+        return unrelated
+    print("Get the vector db!")
+
+    # client = ChatOpenAI(
+    #       openai_api_key = os.environ.get("ARK_API_KEY"),
+    #       openai_api_base="https://ark.cn-beijing.volces.com/api/v3",
+    #       model_name="deepseek-r1-250120",
+    #       max_tokens = None,
+    #       temperature = 0)
+    print("SILI_API_KEY=", os.environ.get("SILI_API_KEY"))
+
+    client = ChatOpenAI(
+          openai_api_key = os.environ.get("SILI_API_KEY"),
+          openai_api_base="https://api.siliconflow.cn/",
+          model_name="Qwen/Qwen2.5-Coder-32B-Instruct",
+          max_tokens = None,
+          temperature = 0)
+
+    prompt_init = ChatPromptTemplate.from_messages([
+        ("system", PROMPTS["role_prompts"]),
+        MessagesPlaceholder(variable_name="history"),  # 历史消息占位符
+        ("human", "{question}"),  # 用户输入
+    ])
+
+    chain = prompt_init | client
+
+    chain_with_history = RunnableWithMessageHistory(
+            chain,
+            get_by_session_id,
+            input_messages_key="question",
+            history_messages_key="history",
+        )
+
+    prompt_template = ChatPromptTemplate.from_template(PROMPTS["customer_questions"])
+    prompt_question = prompt_template.format(knowledge_base=context_text1, question=query)
+    # 调用链并传入会话 ID
+    # session_id = client_ip
+    session_id = "nk001"
+    response_question = chain_with_history.invoke(
+        {
+            "question": prompt_question
+        },
+        config={"configurable": {"session_id": session_id}}
+    )
+    # response_question = client.invoke(prompt_question)
+    print(response_question.content)
+    # return response_question.content
+    return {"messages": [response_question]}
+
 
 def get_by_session_id(session_id: str) -> BaseChatMessageHistory:
     if session_id not in store:
         store[session_id] = InMemoryHistory()
     return store[session_id]
 
-def query_rag(query, client_ip):
+def query_rag(state: State):
     # Init vector DB
     # embedding_fn = NVIDIAEmbeddings(model="NV-Embed-QA")
     context_text1 = get_db(query)
@@ -103,14 +172,25 @@ def query_rag(query, client_ip):
     print(response_question.content)
     return response_question.content
 
-    
+graph_builder.add_node("chatbot", chatbot)
+graph_builder.add_edge(START, "chatbot")
+graph_builder.add_edge("chatbot", END)
+graph = graph_builder.compile()
+
+def stream_graph_updates(user_input: str, client_ip:str):
+    config = {
+        "messages": [{"role": "user", "content": user_input}]
+    }
+    for event in graph.stream(config):
+        for value in event.values():
+            print("Assistant:", value["messages"][-1].content)
+            return value["messages"][-1].content
+
 def main():
     # 平常调试时候不用走前端界面 python这个query_data就行 
     with open(file_questions, 'r', encoding='utf-8') as file:
         query_text = file.read()
     query_rag(query_text, "127.0.0.1")
-    
-
 
 if __name__ == "__main__":
     main()
