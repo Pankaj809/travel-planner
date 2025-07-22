@@ -16,6 +16,10 @@ pip install fastapi uvicorn -i https://pypi.tuna.tsinghua.edu.cn/simple
 ```
 根据报错 缺哪个依赖以此类推进行下载
 
+```
+pip install fastapi==0.115.9
+```
+
 建立向量数据库
 ```
 python seed_db.py
