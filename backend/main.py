@@ -2,7 +2,7 @@ from fastapi import FastAPI, Request
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import HTMLResponse
 from pydantic import BaseModel
-from query_data import query_rag, stream_graph_updates
+from query_data import stream_graph_updates
 
 ICS = FastAPI()
 
@@ -28,6 +28,6 @@ async def chat_endpoint(msg: Message, request: Request):
     client_host = request.client.host
     # 你的后续处理...
     # LLM_response = query_rag(msg.text, request.client.host)
-    LLM_response = stream_graph_updates(msg.text, request.client.host)
+    LLM_response = stream_graph_updates(msg.text, client_host)
     response = f"{LLM_response}"
     return {"reply": response}

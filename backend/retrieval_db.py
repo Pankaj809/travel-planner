@@ -47,5 +47,5 @@ def get_db(query):
 
     # context_text1 = "\n\n---\n\n".join([f"Score: {_score}\n{doc.page_content}"  for doc, _score in results1])
     context_text1 = "\n\n---\n\n".join([doc.page_content for doc, _score in results1])
-    print(context_text1)
+    # print(context_text1)
     return context_text1
