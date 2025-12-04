@@ -87,7 +87,7 @@ def check_related(state: State):
 # Here we use a global variable to store the chat message history.
 # This will make it easier to inspect it to see the underlying results.
 def search_info(state: State):
-    query = state["messages"][0].content
+    query = state["messages"][-1].content
     # print(query)
     # print("***********")
     context_text1 = get_db(query)
@@ -202,7 +202,7 @@ def print_tofront(state: State):
 graph_builder.add_node("refine_que", refine_que)
 graph_builder.add_node("search_info", search_info)
 graph_builder.add_node("print_tofront", print_tofront)
-# graph_builder.set_entry_point("refine_que")
+
 graph_builder.add_edge(START, "refine_que")
 graph_builder.add_conditional_edges("refine_que", check_related, {True: "search_info", False: "search_info"})
 graph_builder.add_edge("search_info", "print_tofront")
