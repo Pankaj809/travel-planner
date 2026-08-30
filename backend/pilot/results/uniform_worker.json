@@ -1,0 +1,461 @@
+[
+  {
+    "task_id": "T1_single_full_comfortable",
+    "condition": "uniform_worker",
+    "orchestrator_model": "gpt-4o-mini",
+    "worker_model": "gpt-4o-mini",
+    "strata": {
+      "slot_completeness": "full",
+      "destination_count": "single",
+      "constraint_tightness": "comfortable",
+      "domain": "trip_planning"
+    },
+    "turns": [
+      {
+        "hops": 7,
+        "agents_visited": [
+          "supervisor",
+          "flight",
+          "supervisor",
+          "hotel",
+          "supervisor",
+          "itinerary",
+          "supervisor"
+        ],
+        "orchestrator_calls": 5,
+        "worker_calls": 0,
+        "elapsed_s": 28.152
+      }
+    ],
+    "total_elapsed_s": 28.152,
+    "passed": false,
+    "failures": [
+      "local_info_results empty",
+      "budget_summary missing"
+    ]
+  },
+  {
+    "task_id": "T2_single_full_overbudget",
+    "condition": "uniform_worker",
+    "orchestrator_model": "gpt-4o-mini",
+    "worker_model": "gpt-4o-mini",
+    "strata": {
+      "slot_completeness": "full",
+      "destination_count": "single",
+      "constraint_tightness": "tight_over",
+      "domain": "trip_planning"
+    },
+    "turns": [
+      {
+        "hops": 7,
+        "agents_visited": [
+          "supervisor",
+          "flight",
+          "supervisor",
+          "hotel",
+          "supervisor",
+          "budget",
+          "supervisor"
+        ],
+        "orchestrator_calls": 4,
+        "worker_calls": 0,
+        "elapsed_s": 18.033
+      }
+    ],
+    "total_elapsed_s": 18.033,
+    "passed": true,
+    "failures": []
+  },
+  {
+    "task_id": "T3_multi_full_comfortable",
+    "condition": "uniform_worker",
+    "orchestrator_model": "gpt-4o-mini",
+    "worker_model": "gpt-4o-mini",
+    "strata": {
+      "slot_completeness": "full",
+      "destination_count": "multi_3",
+      "constraint_tightness": "comfortable",
+      "domain": "trip_planning"
+    },
+    "turns": [
+      {
+        "hops": 7,
+        "agents_visited": [
+          "supervisor",
+          "itinerary",
+          "supervisor",
+          "flight",
+          "supervisor",
+          "hotel",
+          "supervisor"
+        ],
+        "orchestrator_calls": 5,
+        "worker_calls": 0,
+        "elapsed_s": 34.304
+      }
+    ],
+    "total_elapsed_s": 34.304,
+    "passed": true,
+    "failures": []
+  },
+  {
+    "task_id": "T4_single_slotfill",
+    "condition": "uniform_worker",
+    "orchestrator_model": "gpt-4o-mini",
+    "worker_model": "gpt-4o-mini",
+    "strata": {
+      "slot_completeness": "under_specified_multiturn",
+      "destination_count": "single",
+      "constraint_tightness": "comfortable",
+      "domain": "trip_planning"
+    },
+    "turns": [
+      {
+        "hops": 1,
+        "agents_visited": [
+          "supervisor"
+        ],
+        "orchestrator_calls": 1,
+        "worker_calls": 0,
+        "elapsed_s": 4.504
+      },
+      {
+        "hops": 7,
+        "agents_visited": [
+          "supervisor",
+          "flight",
+          "supervisor",
+          "hotel",
+          "supervisor",
+          "local_info",
+          "supervisor"
+        ],
+        "orchestrator_calls": 4,
+        "worker_calls": 0,
+        "elapsed_s": 18.326
+      }
+    ],
+    "total_elapsed_s": 22.83,
+    "passed": true,
+    "failures": []
+  },
+  {
+    "task_id": "T5_multi_slotfill_tight",
+    "condition": "uniform_worker",
+    "orchestrator_model": "gpt-4o-mini",
+    "worker_model": "gpt-4o-mini",
+    "strata": {
+      "slot_completeness": "under_specified_multiturn",
+      "destination_count": "multi_3",
+      "constraint_tightness": "tight",
+      "domain": "trip_planning"
+    },
+    "turns": [
+      {
+        "hops": 1,
+        "agents_visited": [
+          "supervisor"
+        ],
+        "orchestrator_calls": 1,
+        "worker_calls": 0,
+        "elapsed_s": 4.519
+      },
+      {
+        "hops": 7,
+        "agents_visited": [
+          "supervisor",
+          "flight",
+          "supervisor",
+          "hotel",
+          "supervisor",
+          "local_info",
+          "supervisor"
+        ],
+        "orchestrator_calls": 4,
+        "worker_calls": 0,
+        "elapsed_s": 24.459
+      }
+    ],
+    "total_elapsed_s": 28.978,
+    "passed": false,
+    "failures": [
+      "budget_summary missing"
+    ]
+  },
+  {
+    "task_id": "T6_rag_grounded",
+    "condition": "uniform_worker",
+    "orchestrator_model": "gpt-4o-mini",
+    "worker_model": "gpt-4o-mini",
+    "strata": {
+      "slot_completeness": "n/a",
+      "destination_count": "n/a",
+      "constraint_tightness": "n/a",
+      "domain": "rag_in_corpus"
+    },
+    "turns": [
+      {
+        "hops": 3,
+        "agents_visited": [
+          "supervisor",
+          "rag",
+          "supervisor"
+        ],
+        "orchestrator_calls": 2,
+        "worker_calls": 1,
+        "elapsed_s": 10.128
+      }
+    ],
+    "total_elapsed_s": 10.128,
+    "passed": true,
+    "failures": []
+  },
+  {
+    "task_id": "T7_rag_ungrounded",
+    "condition": "uniform_worker",
+    "orchestrator_model": "gpt-4o-mini",
+    "worker_model": "gpt-4o-mini",
+    "strata": {
+      "slot_completeness": "n/a",
+      "destination_count": "n/a",
+      "constraint_tightness": "n/a",
+      "domain": "rag_out_of_corpus"
+    },
+    "turns": [
+      {
+        "hops": 3,
+        "agents_visited": [
+          "supervisor",
+          "rag",
+          "supervisor"
+        ],
+        "orchestrator_calls": 2,
+        "worker_calls": 1,
+        "elapsed_s": 9.183
+      }
+    ],
+    "total_elapsed_s": 9.183,
+    "passed": true,
+    "failures": []
+  },
+  {
+    "task_id": "T8_domain_mix",
+    "condition": "uniform_worker",
+    "orchestrator_model": "gpt-4o-mini",
+    "worker_model": "gpt-4o-mini",
+    "strata": {
+      "slot_completeness": "full",
+      "destination_count": "single",
+      "constraint_tightness": "comfortable",
+      "domain": "mixed"
+    },
+    "turns": [
+      {
+        "hops": 5,
+        "agents_visited": [
+          "supervisor",
+          "rag",
+          "supervisor",
+          "rag",
+          "supervisor"
+        ],
+        "orchestrator_calls": 3,
+        "worker_calls": 2,
+        "elapsed_s": 13.128
+      },
+      {
+        "hops": 7,
+        "agents_visited": [
+          "supervisor",
+          "flight",
+          "supervisor",
+          "flight",
+          "supervisor",
+          "flight",
+          "supervisor"
+        ],
+        "orchestrator_calls": 4,
+        "worker_calls": 0,
+        "elapsed_s": 11.56
+      }
+    ],
+    "total_elapsed_s": 24.688,
+    "passed": false,
+    "failures": [
+      "knowledge_context missing - rag agent doesn't appear to have been consulted for turn 1's question"
+    ]
+  },
+  {
+    "task_id": "T9_multi_stress_5city",
+    "condition": "uniform_worker",
+    "orchestrator_model": "gpt-4o-mini",
+    "worker_model": "gpt-4o-mini",
+    "strata": {
+      "slot_completeness": "full",
+      "destination_count": "multi_5",
+      "constraint_tightness": "comfortable",
+      "domain": "trip_planning"
+    },
+    "turns": [
+      {
+        "hops": 7,
+        "agents_visited": [
+          "supervisor",
+          "flight",
+          "supervisor",
+          "itinerary",
+          "supervisor",
+          "hotel",
+          "supervisor"
+        ],
+        "orchestrator_calls": 5,
+        "worker_calls": 0,
+        "elapsed_s": 38.939
+      }
+    ],
+    "total_elapsed_s": 38.939,
+    "passed": false,
+    "failures": [
+      "agent_scratchpad has 7 entries - MAX_HOPS_PER_TURN=6 should cap this within one turn"
+    ]
+  },
+  {
+    "task_id": "T10_visa_city_phrasing",
+    "condition": "uniform_worker",
+    "orchestrator_model": "gpt-4o-mini",
+    "worker_model": "gpt-4o-mini",
+    "strata": {
+      "slot_completeness": "full",
+      "destination_count": "single",
+      "constraint_tightness": "comfortable",
+      "domain": "trip_planning"
+    },
+    "turns": [
+      {
+        "hops": 7,
+        "agents_visited": [
+          "supervisor",
+          "local_info",
+          "supervisor",
+          "flight",
+          "supervisor",
+          "hotel",
+          "supervisor"
+        ],
+        "orchestrator_calls": 4,
+        "worker_calls": 0,
+        "elapsed_s": 14.916
+      }
+    ],
+    "total_elapsed_s": 14.916,
+    "passed": true,
+    "failures": []
+  },
+  {
+    "task_id": "T11_visa_iso_phrasing",
+    "condition": "uniform_worker",
+    "orchestrator_model": "gpt-4o-mini",
+    "worker_model": "gpt-4o-mini",
+    "strata": {
+      "slot_completeness": "full",
+      "destination_count": "single",
+      "constraint_tightness": "comfortable",
+      "domain": "trip_planning"
+    },
+    "turns": [
+      {
+        "hops": 3,
+        "agents_visited": [
+          "supervisor",
+          "local_info",
+          "supervisor"
+        ],
+        "orchestrator_calls": 2,
+        "worker_calls": 0,
+        "elapsed_s": 7.866
+      }
+    ],
+    "total_elapsed_s": 7.866,
+    "passed": true,
+    "failures": []
+  },
+  {
+    "task_id": "T12_weather_horizon_exceeded",
+    "condition": "uniform_worker",
+    "orchestrator_model": "gpt-4o-mini",
+    "worker_model": "gpt-4o-mini",
+    "strata": {
+      "slot_completeness": "full",
+      "destination_count": "single",
+      "constraint_tightness": "comfortable",
+      "domain": "trip_planning"
+    },
+    "turns": [
+      {
+        "hops": 7,
+        "agents_visited": [
+          "supervisor",
+          "local_info",
+          "supervisor",
+          "flight",
+          "supervisor",
+          "hotel",
+          "supervisor"
+        ],
+        "orchestrator_calls": 4,
+        "worker_calls": 0,
+        "elapsed_s": 17.935
+      }
+    ],
+    "total_elapsed_s": 17.935,
+    "passed": true,
+    "failures": []
+  },
+  {
+    "task_id": "T13_contradiction_correction",
+    "condition": "uniform_worker",
+    "orchestrator_model": "gpt-4o-mini",
+    "worker_model": "gpt-4o-mini",
+    "strata": {
+      "slot_completeness": "under_specified_multiturn",
+      "destination_count": "single",
+      "constraint_tightness": "comfortable",
+      "domain": "trip_planning"
+    },
+    "turns": [
+      {
+        "hops": 7,
+        "agents_visited": [
+          "supervisor",
+          "flight",
+          "supervisor",
+          "hotel",
+          "supervisor",
+          "local_info",
+          "supervisor"
+        ],
+        "orchestrator_calls": 4,
+        "worker_calls": 0,
+        "elapsed_s": 14.575
+      },
+      {
+        "hops": 7,
+        "agents_visited": [
+          "supervisor",
+          "flight",
+          "supervisor",
+          "flight",
+          "supervisor",
+          "flight",
+          "supervisor"
+        ],
+        "orchestrator_calls": 4,
+        "worker_calls": 0,
+        "elapsed_s": 15.791
+      }
+    ],
+    "total_elapsed_s": 30.366,
+    "passed": true,
+    "failures": []
+  }
+]

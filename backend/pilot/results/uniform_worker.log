@@ -1,0 +1,233 @@
+2026-08-30 11:56:50,331 INFO     httpx2 :: HTTP Request: POST https://aizex.top/v1/chat/completions "HTTP/1.1 200 OK"
+2026-08-30 11:56:50,350 INFO     agents.supervisor :: [pilot-T1_single_full_comfortable] routing -> flight | reasoning=The user has provided all necessary details for flight search, so the flight specialist should act next.
+2026-08-30 11:56:50,351 INFO     agents.flight_agent :: [pilot-T1_single_full_comfortable] flight: New York->['Paris'] x1 found 3 offer(s)
+2026-08-30 11:56:53,080 INFO     httpx2 :: HTTP Request: POST https://aizex.top/v1/chat/completions "HTTP/1.1 200 OK"
+2026-08-30 11:56:53,084 INFO     agents.supervisor :: [pilot-T1_single_full_comfortable] routing -> hotel | reasoning=The user has already been consulted for flights, so the next step is to find hotel offers.
+2026-08-30 11:56:53,085 INFO     agents.hotel_agent :: [pilot-T1_single_full_comfortable] hotel: ['Paris'] found 3 offer(s)
+2026-08-30 11:56:55,942 INFO     httpx2 :: HTTP Request: POST https://aizex.top/v1/chat/completions "HTTP/1.1 200 OK"
+2026-08-30 11:56:55,946 INFO     agents.supervisor :: [pilot-T1_single_full_comfortable] routing -> itinerary | reasoning=The user has provided all necessary details for creating a day-by-day itinerary.
+2026-08-30 11:57:03,137 INFO     httpx2 :: HTTP Request: POST https://aizex.top/v1/chat/completions "HTTP/1.1 200 OK"
+2026-08-30 11:57:03,158 INFO     agents.itinerary_agent :: [pilot-T1_single_full_comfortable] itinerary: drafted (2037 chars)
+2026-08-30 11:57:05,453 INFO     httpx2 :: HTTP Request: POST https://aizex.top/v1/chat/completions "HTTP/1.1 200 OK"
+2026-08-30 11:57:05,457 WARNING  agents.supervisor :: [pilot-T1_single_full_comfortable] hop budget exhausted (6) - forcing responder
+2026-08-30 11:57:05,457 INFO     agents.supervisor :: [pilot-T1_single_full_comfortable] routing -> responder | reasoning=Local information about weather and visa requirements for Paris is still needed.
+2026-08-30 11:57:05,458 INFO     agents.responder :: [pilot-T1_single_full_comfortable] responder: composing final answer
+2026-08-30 11:57:15,461 INFO     httpx2 :: HTTP Request: POST https://aizex.top/v1/chat/completions "HTTP/1.1 200 OK"
+2026-08-30 11:57:18,357 INFO     httpx2 :: HTTP Request: POST https://aizex.top/v1/chat/completions "HTTP/1.1 200 OK"
+2026-08-30 11:57:18,361 INFO     agents.supervisor :: [pilot-T2_single_full_overbudget] routing -> flight | reasoning=The user has provided all necessary details for flight search, so the flight specialist should act next.
+2026-08-30 11:57:18,362 INFO     agents.flight_agent :: [pilot-T2_single_full_overbudget] flight: Chicago->['Tokyo'] x2 found 3 offer(s)
+2026-08-30 11:57:21,222 INFO     httpx2 :: HTTP Request: POST https://aizex.top/v1/chat/completions "HTTP/1.1 200 OK"
+2026-08-30 11:57:21,226 INFO     agents.supervisor :: [pilot-T2_single_full_overbudget] routing -> hotel | reasoning=The user has provided all necessary details for hotel search, so the hotel specialist should act next.
+2026-08-30 11:57:21,227 INFO     agents.hotel_agent :: [pilot-T2_single_full_overbudget] hotel: ['Tokyo'] found 3 offer(s)
+2026-08-30 11:57:23,843 INFO     httpx2 :: HTTP Request: POST https://aizex.top/v1/chat/completions "HTTP/1.1 200 OK"
+2026-08-30 11:57:23,847 INFO     agents.supervisor :: [pilot-T2_single_full_overbudget] routing -> budget | reasoning=The user has provided all necessary details to check if the trip is within budget.
+2026-08-30 11:57:23,848 INFO     agents.budget_agent :: [pilot-T2_single_full_overbudget] budget: total=1917 over_budget=True
+2026-08-30 11:57:27,555 INFO     httpx2 :: HTTP Request: POST https://aizex.top/v1/chat/completions "HTTP/1.1 200 OK"
+2026-08-30 11:57:27,559 WARNING  agents.supervisor :: [pilot-T2_single_full_overbudget] hop budget exhausted (6) - forcing responder
+2026-08-30 11:57:27,560 INFO     agents.supervisor :: [pilot-T2_single_full_overbudget] routing -> responder | reasoning=All necessary information has been gathered to provide a response regarding flights, hotels, and budget.
+2026-08-30 11:57:27,561 INFO     agents.responder :: [pilot-T2_single_full_overbudget] responder: composing final answer
+2026-08-30 11:57:33,510 INFO     httpx2 :: HTTP Request: POST https://aizex.top/v1/chat/completions "HTTP/1.1 200 OK"
+2026-08-30 11:57:36,218 INFO     httpx2 :: HTTP Request: POST https://aizex.top/v1/chat/completions "HTTP/1.1 200 OK"
+2026-08-30 11:57:36,222 INFO     agents.supervisor :: [pilot-T3_multi_full_comfortable] routing -> itinerary | reasoning=The user has provided all necessary details for drafting a multi-city itinerary.
+2026-08-30 11:57:47,871 INFO     httpx2 :: HTTP Request: POST https://aizex.top/v1/chat/completions "HTTP/1.1 200 OK"
+2026-08-30 11:57:47,890 INFO     agents.itinerary_agent :: [pilot-T3_multi_full_comfortable] itinerary: drafted (2081 chars)
+2026-08-30 11:57:50,632 INFO     httpx2 :: HTTP Request: POST https://aizex.top/v1/chat/completions "HTTP/1.1 200 OK"
+2026-08-30 11:57:50,639 INFO     agents.supervisor :: [pilot-T3_multi_full_comfortable] routing -> flight | reasoning=The next step is to search for flight offers from London to Paris, then from Barcelona back to London, as the user has provided all necessary details for flights.
+2026-08-30 11:57:50,640 INFO     agents.flight_agent :: [pilot-T3_multi_full_comfortable] flight: London->['Paris', 'Rome', 'Barcelona'] x1 found 9 offer(s)
+2026-08-30 11:57:53,438 INFO     httpx2 :: HTTP Request: POST https://aizex.top/v1/chat/completions "HTTP/1.1 200 OK"
+2026-08-30 11:57:53,442 INFO     agents.supervisor :: [pilot-T3_multi_full_comfortable] routing -> hotel | reasoning=The user has provided details for the trip, and now we need to search for hotel offers.
+2026-08-30 11:57:53,443 INFO     agents.hotel_agent :: [pilot-T3_multi_full_comfortable] hotel: ['Paris', 'Rome', 'Barcelona'] found 9 offer(s)
+2026-08-30 11:57:55,630 INFO     httpx2 :: HTTP Request: POST https://aizex.top/v1/chat/completions "HTTP/1.1 200 OK"
+2026-08-30 11:57:55,633 WARNING  agents.supervisor :: [pilot-T3_multi_full_comfortable] hop budget exhausted (6) - forcing responder
+2026-08-30 11:57:55,634 INFO     agents.supervisor :: [pilot-T3_multi_full_comfortable] routing -> responder | reasoning=The user has provided all necessary trip details, and now we need to gather local information such as weather forecasts for the destinations.
+2026-08-30 11:57:55,634 INFO     agents.responder :: [pilot-T3_multi_full_comfortable] responder: composing final answer
+2026-08-30 11:58:07,815 INFO     httpx2 :: HTTP Request: POST https://aizex.top/v1/chat/completions "HTTP/1.1 200 OK"
+2026-08-30 11:58:09,672 INFO     httpx2 :: HTTP Request: POST https://aizex.top/v1/chat/completions "HTTP/1.1 200 OK"
+2026-08-30 11:58:09,675 INFO     agents.supervisor :: [pilot-T4_single_slotfill] routing -> responder | reasoning=The user has expressed interest in traveling to Bangkok but has not provided specific details such as dates, origin, or budget.
+2026-08-30 11:58:09,677 INFO     agents.responder :: [pilot-T4_single_slotfill] responder: composing final answer
+2026-08-30 11:58:12,320 INFO     httpx2 :: HTTP Request: POST https://aizex.top/v1/chat/completions "HTTP/1.1 200 OK"
+2026-08-30 11:58:14,369 INFO     httpx2 :: HTTP Request: POST https://aizex.top/v1/chat/completions "HTTP/1.1 200 OK"
+2026-08-30 11:58:14,372 INFO     agents.supervisor :: [pilot-T4_single_slotfill] routing -> flight | reasoning=The user has provided all necessary details for searching flight offers.
+2026-08-30 11:58:14,374 INFO     agents.flight_agent :: [pilot-T4_single_slotfill] flight: Singapore->['Bangkok'] x1 found 3 offer(s)
+2026-08-30 11:58:16,441 INFO     httpx2 :: HTTP Request: POST https://aizex.top/v1/chat/completions "HTTP/1.1 200 OK"
+2026-08-30 11:58:16,444 INFO     agents.supervisor :: [pilot-T4_single_slotfill] routing -> hotel | reasoning=The user has provided all necessary details for hotel search.
+2026-08-30 11:58:16,446 INFO     agents.hotel_agent :: [pilot-T4_single_slotfill] hotel: ['Bangkok'] found 3 offer(s)
+2026-08-30 11:58:18,576 INFO     httpx2 :: HTTP Request: POST https://aizex.top/v1/chat/completions "HTTP/1.1 200 OK"
+2026-08-30 11:58:18,580 INFO     agents.supervisor :: [pilot-T4_single_slotfill] routing -> local_info | reasoning=The user has provided all necessary trip details, so I will now check the local information for Bangkok.
+2026-08-30 11:58:20,315 INFO     agents.local_info_agent :: [pilot-T4_single_slotfill] local_info: looked up 1 destination(s)
+2026-08-30 11:58:22,759 INFO     httpx2 :: HTTP Request: POST https://aizex.top/v1/chat/completions "HTTP/1.1 200 OK"
+2026-08-30 11:58:22,763 WARNING  agents.supervisor :: [pilot-T4_single_slotfill] hop budget exhausted (6) - forcing responder
+2026-08-30 11:58:22,763 INFO     agents.supervisor :: [pilot-T4_single_slotfill] routing -> responder | reasoning=The user has provided all necessary details for the itinerary specialist to draft a day-by-day plan for their trip.
+2026-08-30 11:58:22,764 INFO     agents.responder :: [pilot-T4_single_slotfill] responder: composing final answer
+2026-08-30 11:58:30,629 INFO     httpx2 :: HTTP Request: POST https://aizex.top/v1/chat/completions "HTTP/1.1 200 OK"
+2026-08-30 11:58:33,297 INFO     httpx2 :: HTTP Request: POST https://aizex.top/v1/chat/completions "HTTP/1.1 200 OK"
+2026-08-30 11:58:33,301 INFO     agents.supervisor :: [pilot-T5_multi_slotfill_tight] routing -> responder | reasoning=The user has provided information about the number of travelers but has not specified any other trip details.
+2026-08-30 11:58:33,302 INFO     agents.responder :: [pilot-T5_multi_slotfill_tight] responder: composing final answer
+2026-08-30 11:58:35,165 INFO     httpx2 :: HTTP Request: POST https://aizex.top/v1/chat/completions "HTTP/1.1 200 OK"
+2026-08-30 11:58:38,264 INFO     httpx2 :: HTTP Request: POST https://aizex.top/v1/chat/completions "HTTP/1.1 200 OK"
+2026-08-30 11:58:38,267 INFO     agents.supervisor :: [pilot-T5_multi_slotfill_tight] routing -> flight | reasoning=The user has provided all necessary details for searching flight offers.
+2026-08-30 11:58:38,268 INFO     agents.flight_agent :: [pilot-T5_multi_slotfill_tight] flight: Mumbai->['Kuala Lumpur', 'Bangkok', 'Singapore'] x2 found 9 offer(s)
+2026-08-30 11:58:40,807 INFO     httpx2 :: HTTP Request: POST https://aizex.top/v1/chat/completions "HTTP/1.1 200 OK"
+2026-08-30 11:58:40,812 INFO     agents.supervisor :: [pilot-T5_multi_slotfill_tight] routing -> hotel | reasoning=The user has provided all necessary details for hotel searches in the specified destinations.
+2026-08-30 11:58:40,813 INFO     agents.hotel_agent :: [pilot-T5_multi_slotfill_tight] hotel: ['Kuala Lumpur', 'Bangkok', 'Singapore'] found 9 offer(s)
+2026-08-30 11:58:42,873 INFO     httpx2 :: HTTP Request: POST https://aizex.top/v1/chat/completions "HTTP/1.1 200 OK"
+2026-08-30 11:58:42,876 INFO     agents.supervisor :: [pilot-T5_multi_slotfill_tight] routing -> local_info | reasoning=The user has provided all necessary trip details, so I will now check the local information for the destinations.
+2026-08-30 11:58:44,658 WARNING  tools.weather_tools :: Forecast request failed for 'Kuala Lumpur': 400 Client Error: Bad Request for url: https://api.open-meteo.com/v1/forecast?latitude=3.1412&longitude=101.68653&daily=temperature_2m_max%2Ctemperature_2m_min%2Cprecipitation_probability_max%2Cweathercode&timezone=auto&start_date=2026-09-12&end_date=2026-09-19
+2026-08-30 11:58:46,543 WARNING  tools.weather_tools :: Forecast request failed for 'Bangkok': 400 Client Error: Bad Request for url: https://api.open-meteo.com/v1/forecast?latitude=13.75398&longitude=100.50144&daily=temperature_2m_max%2Ctemperature_2m_min%2Cprecipitation_probability_max%2Cweathercode&timezone=auto&start_date=2026-09-12&end_date=2026-09-19
+2026-08-30 11:58:48,311 WARNING  tools.weather_tools :: Forecast request failed for 'Singapore': 400 Client Error: Bad Request for url: https://api.open-meteo.com/v1/forecast?latitude=1.28967&longitude=103.85007&daily=temperature_2m_max%2Ctemperature_2m_min%2Cprecipitation_probability_max%2Cweathercode&timezone=auto&start_date=2026-09-12&end_date=2026-09-19
+2026-08-30 11:58:48,313 INFO     agents.local_info_agent :: [pilot-T5_multi_slotfill_tight] local_info: looked up 3 destination(s)
+2026-08-30 11:58:50,711 INFO     httpx2 :: HTTP Request: POST https://aizex.top/v1/chat/completions "HTTP/1.1 200 OK"
+2026-08-30 11:58:50,714 WARNING  agents.supervisor :: [pilot-T5_multi_slotfill_tight] hop budget exhausted (6) - forcing responder
+2026-08-30 11:58:50,715 INFO     agents.supervisor :: [pilot-T5_multi_slotfill_tight] routing -> responder | reasoning=The user has provided all necessary details for drafting an itinerary.
+2026-08-30 11:58:50,716 INFO     agents.responder :: [pilot-T5_multi_slotfill_tight] responder: composing final answer
+2026-08-30 11:58:59,604 INFO     httpx2 :: HTTP Request: POST https://aizex.top/v1/chat/completions "HTTP/1.1 200 OK"
+2026-08-30 11:59:01,805 INFO     httpx2 :: HTTP Request: POST https://aizex.top/v1/chat/completions "HTTP/1.1 200 OK"
+2026-08-30 11:59:01,808 INFO     agents.supervisor :: [pilot-T6_rag_grounded] routing -> rag | reasoning=The user is asking a general knowledge question unrelated to a specific trip.
+2026-08-30 11:59:01,809 INFO     agents.rag_agent :: [pilot-T6_rag_grounded] rag: querying knowledge base
+2026-08-30 11:59:03,109 INFO     httpx2 :: HTTP Request: POST https://aizex.top/v1/embeddings "HTTP/1.1 200 OK"
+2026-08-30 11:59:05,379 INFO     httpx2 :: HTTP Request: POST https://aizex.top/v1/chat/completions "HTTP/1.1 200 OK"
+2026-08-30 11:59:07,414 INFO     httpx2 :: HTTP Request: POST https://aizex.top/v1/chat/completions "HTTP/1.1 200 OK"
+2026-08-30 11:59:07,419 INFO     agents.supervisor :: [pilot-T6_rag_grounded] routing -> responder | reasoning=The user is asking a technical question unrelated to travel planning, so the responder should address it.
+2026-08-30 11:59:07,420 INFO     agents.responder :: [pilot-T6_rag_grounded] responder: composing final answer
+2026-08-30 11:59:09,752 INFO     httpx2 :: HTTP Request: POST https://aizex.top/v1/chat/completions "HTTP/1.1 200 OK"
+2026-08-30 11:59:12,189 INFO     httpx2 :: HTTP Request: POST https://aizex.top/v1/chat/completions "HTTP/1.1 200 OK"
+2026-08-30 11:59:12,192 INFO     agents.supervisor :: [pilot-T7_rag_ungrounded] routing -> rag | reasoning=The user is asking a general product question unrelated to a specific trip.
+2026-08-30 11:59:12,194 INFO     agents.rag_agent :: [pilot-T7_rag_ungrounded] rag: querying knowledge base
+2026-08-30 11:59:13,443 INFO     httpx2 :: HTTP Request: POST https://aizex.top/v1/embeddings "HTTP/1.1 200 OK"
+2026-08-30 11:59:15,285 INFO     httpx2 :: HTTP Request: POST https://aizex.top/v1/chat/completions "HTTP/1.1 200 OK"
+2026-08-30 11:59:17,495 INFO     httpx2 :: HTTP Request: POST https://aizex.top/v1/chat/completions "HTTP/1.1 200 OK"
+2026-08-30 11:59:17,500 INFO     agents.supervisor :: [pilot-T7_rag_ungrounded] routing -> responder | reasoning=The user is asking a general product question unrelated to a specific trip.
+2026-08-30 11:59:17,501 INFO     agents.responder :: [pilot-T7_rag_ungrounded] responder: composing final answer
+2026-08-30 11:59:18,933 INFO     httpx2 :: HTTP Request: POST https://aizex.top/v1/chat/completions "HTTP/1.1 200 OK"
+2026-08-30 11:59:20,808 INFO     httpx2 :: HTTP Request: POST https://aizex.top/v1/chat/completions "HTTP/1.1 200 OK"
+2026-08-30 11:59:20,812 INFO     agents.supervisor :: [pilot-T8_domain_mix] routing -> rag | reasoning=The user asked a general knowledge question unrelated to a specific trip.
+2026-08-30 11:59:20,813 INFO     agents.rag_agent :: [pilot-T8_domain_mix] rag: querying knowledge base
+2026-08-30 11:59:21,748 INFO     httpx2 :: HTTP Request: POST https://aizex.top/v1/embeddings "HTTP/1.1 200 OK"
+2026-08-30 11:59:23,551 INFO     httpx2 :: HTTP Request: POST https://aizex.top/v1/chat/completions "HTTP/1.1 200 OK"
+2026-08-30 11:59:25,235 INFO     httpx2 :: HTTP Request: POST https://aizex.top/v1/chat/completions "HTTP/1.1 200 OK"
+2026-08-30 11:59:25,238 INFO     agents.supervisor :: [pilot-T8_domain_mix] routing -> rag | reasoning=The user asked a general product knowledge question unrelated to travel, so the RAG specialist should answer.
+2026-08-30 11:59:25,239 INFO     agents.rag_agent :: [pilot-T8_domain_mix] rag: querying knowledge base
+2026-08-30 11:59:25,980 INFO     httpx2 :: HTTP Request: POST https://aizex.top/v1/embeddings "HTTP/1.1 200 OK"
+2026-08-30 11:59:28,277 INFO     httpx2 :: HTTP Request: POST https://aizex.top/v1/chat/completions "HTTP/1.1 200 OK"
+2026-08-30 11:59:30,576 INFO     httpx2 :: HTTP Request: POST https://aizex.top/v1/chat/completions "HTTP/1.1 200 OK"
+2026-08-30 11:59:30,582 INFO     agents.supervisor :: [pilot-T8_domain_mix] routing -> responder | reasoning=The user asked a general knowledge question unrelated to their trip, so the responder should handle this.
+2026-08-30 11:59:30,584 INFO     agents.responder :: [pilot-T8_domain_mix] responder: composing final answer
+2026-08-30 11:59:32,063 INFO     httpx2 :: HTTP Request: POST https://aizex.top/v1/chat/completions "HTTP/1.1 200 OK"
+2026-08-30 11:59:33,933 INFO     httpx2 :: HTTP Request: POST https://aizex.top/v1/chat/completions "HTTP/1.1 200 OK"
+2026-08-30 11:59:33,936 INFO     agents.supervisor :: [pilot-T8_domain_mix] routing -> flight | reasoning=User provided origin, destination, date, nationality, and number of travelers, so the flight specialist should search for flight offers.
+2026-08-30 11:59:33,937 INFO     agents.flight_agent :: [pilot-T8_domain_mix] flight: Boston->['Tokyo'] x1 found 3 offer(s)
+2026-08-30 11:59:36,200 INFO     httpx2 :: HTTP Request: POST https://aizex.top/v1/chat/completions "HTTP/1.1 200 OK"
+2026-08-30 11:59:36,203 INFO     agents.supervisor :: [pilot-T8_domain_mix] routing -> flight | reasoning=The user has provided all necessary details for a flight search.
+2026-08-30 11:59:36,204 INFO     agents.flight_agent :: [pilot-T8_domain_mix] flight: Boston->['Tokyo'] x1 found 3 offer(s)
+2026-08-30 11:59:38,438 INFO     httpx2 :: HTTP Request: POST https://aizex.top/v1/chat/completions "HTTP/1.1 200 OK"
+2026-08-30 11:59:38,441 INFO     agents.supervisor :: [pilot-T8_domain_mix] routing -> flight | reasoning=The user has provided all necessary details for a flight search.
+2026-08-30 11:59:38,442 INFO     agents.flight_agent :: [pilot-T8_domain_mix] flight: Boston->['Tokyo'] x1 found 3 offer(s)
+2026-08-30 11:59:40,667 INFO     httpx2 :: HTTP Request: POST https://aizex.top/v1/chat/completions "HTTP/1.1 200 OK"
+2026-08-30 11:59:40,671 WARNING  agents.supervisor :: [pilot-T8_domain_mix] hop budget exhausted (6) - forcing responder
+2026-08-30 11:59:40,671 INFO     agents.supervisor :: [pilot-T8_domain_mix] routing -> responder | reasoning=The user has provided all necessary details for the flight search.
+2026-08-30 11:59:40,672 INFO     agents.responder :: [pilot-T8_domain_mix] responder: composing final answer
+2026-08-30 11:59:43,622 INFO     httpx2 :: HTTP Request: POST https://aizex.top/v1/chat/completions "HTTP/1.1 200 OK"
+2026-08-30 11:59:46,280 INFO     httpx2 :: HTTP Request: POST https://aizex.top/v1/chat/completions "HTTP/1.1 200 OK"
+2026-08-30 11:59:46,284 INFO     agents.supervisor :: [pilot-T9_multi_stress_5city] routing -> flight | reasoning=The user has provided all necessary details for flight searches.
+2026-08-30 11:59:46,285 INFO     agents.flight_agent :: [pilot-T9_multi_stress_5city] flight: Seoul->['Tokyo', 'Bangkok', 'Singapore', 'Kuala Lumpur', 'Bali'] x1 found 15 offer(s)
+2026-08-30 11:59:49,412 INFO     httpx2 :: HTTP Request: POST https://aizex.top/v1/chat/completions "HTTP/1.1 200 OK"
+2026-08-30 11:59:49,416 INFO     agents.supervisor :: [pilot-T9_multi_stress_5city] routing -> itinerary | reasoning=The user has provided a clear itinerary request, so the itinerary specialist should draft a day-by-day plan.
+2026-08-30 12:00:04,344 INFO     httpx2 :: HTTP Request: POST https://aizex.top/v1/chat/completions "HTTP/1.1 200 OK"
+2026-08-30 12:00:04,355 INFO     agents.itinerary_agent :: [pilot-T9_multi_stress_5city] itinerary: drafted (2951 chars)
+2026-08-30 12:00:07,247 INFO     httpx2 :: HTTP Request: POST https://aizex.top/v1/chat/completions "HTTP/1.1 200 OK"
+2026-08-30 12:00:07,251 INFO     agents.supervisor :: [pilot-T9_multi_stress_5city] routing -> hotel | reasoning=The user has requested hotel offers for their trip, which have not yet been gathered.
+2026-08-30 12:00:07,253 INFO     agents.hotel_agent :: [pilot-T9_multi_stress_5city] hotel: ['Tokyo', 'Bangkok', 'Singapore', 'Kuala Lumpur', 'Bali'] found 15 offer(s)
+2026-08-30 12:00:10,229 INFO     httpx2 :: HTTP Request: POST https://aizex.top/v1/chat/completions "HTTP/1.1 200 OK"
+2026-08-30 12:00:10,233 WARNING  agents.supervisor :: [pilot-T9_multi_stress_5city] hop budget exhausted (6) - forcing responder
+2026-08-30 12:00:10,233 INFO     agents.supervisor :: [pilot-T9_multi_stress_5city] routing -> responder | reasoning=Weather information is needed for each destination before finalizing the itinerary.
+2026-08-30 12:00:10,234 INFO     agents.responder :: [pilot-T9_multi_stress_5city] responder: composing final answer
+2026-08-30 12:00:22,545 INFO     httpx2 :: HTTP Request: POST https://aizex.top/v1/chat/completions "HTTP/1.1 200 OK"
+2026-08-30 12:00:24,559 INFO     httpx2 :: HTTP Request: POST https://aizex.top/v1/chat/completions "HTTP/1.1 200 OK"
+2026-08-30 12:00:24,563 INFO     agents.supervisor :: [pilot-T10_visa_city_phrasing] routing -> local_info | reasoning=The user has provided details about their nationality and travel dates, so I will first check the visa requirements for a US citizen visiting Paris.
+2026-08-30 12:00:26,367 WARNING  tools.weather_tools :: Forecast request failed for 'Paris': 400 Client Error: Bad Request for url: https://api.open-meteo.com/v1/forecast?latitude=48.85341&longitude=2.3488&daily=temperature_2m_max%2Ctemperature_2m_min%2Cprecipitation_probability_max%2Cweathercode&timezone=auto&start_date=2026-09-10&end_date=2026-09-15
+2026-08-30 12:00:26,370 INFO     agents.local_info_agent :: [pilot-T10_visa_city_phrasing] local_info: looked up 1 destination(s)
+2026-08-30 12:00:28,341 INFO     httpx2 :: HTTP Request: POST https://aizex.top/v1/chat/completions "HTTP/1.1 200 OK"
+2026-08-30 12:00:28,345 INFO     agents.supervisor :: [pilot-T10_visa_city_phrasing] routing -> flight | reasoning=The user has provided the necessary details for a flight search from Boston to Paris.
+2026-08-30 12:00:28,346 INFO     agents.flight_agent :: [pilot-T10_visa_city_phrasing] flight: Boston->['Paris'] x1 found 3 offer(s)
+2026-08-30 12:00:30,262 INFO     httpx2 :: HTTP Request: POST https://aizex.top/v1/chat/completions "HTTP/1.1 200 OK"
+2026-08-30 12:00:30,265 INFO     agents.supervisor :: [pilot-T10_visa_city_phrasing] routing -> hotel | reasoning=The user has already been informed about visa requirements, and now we need to search for hotel offers.
+2026-08-30 12:00:30,267 INFO     agents.hotel_agent :: [pilot-T10_visa_city_phrasing] hotel: ['Paris'] found 3 offer(s)
+2026-08-30 12:00:32,775 INFO     httpx2 :: HTTP Request: POST https://aizex.top/v1/chat/completions "HTTP/1.1 200 OK"
+2026-08-30 12:00:32,778 WARNING  agents.supervisor :: [pilot-T10_visa_city_phrasing] hop budget exhausted (6) - forcing responder
+2026-08-30 12:00:32,779 INFO     agents.supervisor :: [pilot-T10_visa_city_phrasing] routing -> responder | reasoning=All necessary information has been gathered to answer the user about visa requirements, flight, and hotel.
+2026-08-30 12:00:32,780 INFO     agents.responder :: [pilot-T10_visa_city_phrasing] responder: composing final answer
+2026-08-30 12:00:37,478 INFO     httpx2 :: HTTP Request: POST https://aizex.top/v1/chat/completions "HTTP/1.1 200 OK"
+2026-08-30 12:00:40,099 INFO     httpx2 :: HTTP Request: POST https://aizex.top/v1/chat/completions "HTTP/1.1 200 OK"
+2026-08-30 12:00:40,103 INFO     agents.supervisor :: [pilot-T11_visa_iso_phrasing] routing -> local_info | reasoning=The user has provided the nationality and destination, so I can now check the visa requirements.
+2026-08-30 12:00:40,876 INFO     tools.weather_tools :: No weather data for 'CN' (geocoding failed or unknown location)
+2026-08-30 12:00:40,877 INFO     agents.local_info_agent :: [pilot-T11_visa_iso_phrasing] local_info: looked up 1 destination(s)
+2026-08-30 12:00:42,950 INFO     httpx2 :: HTTP Request: POST https://aizex.top/v1/chat/completions "HTTP/1.1 200 OK"
+2026-08-30 12:00:42,953 INFO     agents.supervisor :: [pilot-T11_visa_iso_phrasing] routing -> responder | reasoning=The user has confirmed the visa requirement for US travelers to China, so no further action is needed.
+2026-08-30 12:00:42,954 INFO     agents.responder :: [pilot-T11_visa_iso_phrasing] responder: composing final answer
+2026-08-30 12:00:45,343 INFO     httpx2 :: HTTP Request: POST https://aizex.top/v1/chat/completions "HTTP/1.1 200 OK"
+2026-08-30 12:00:47,477 INFO     httpx2 :: HTTP Request: POST https://aizex.top/v1/chat/completions "HTTP/1.1 200 OK"
+2026-08-30 12:00:47,481 INFO     agents.supervisor :: [pilot-T12_weather_horizon_exceeded] routing -> local_info | reasoning=The user has provided all necessary details for checking the weather in Reykjavik, so the local_info specialist should act next.
+2026-08-30 12:00:49,214 INFO     agents.local_info_agent :: [pilot-T12_weather_horizon_exceeded] local_info: looked up 1 destination(s)
+2026-08-30 12:00:51,465 INFO     httpx2 :: HTTP Request: POST https://aizex.top/v1/chat/completions "HTTP/1.1 200 OK"
+2026-08-30 12:00:51,469 INFO     agents.supervisor :: [pilot-T12_weather_horizon_exceeded] routing -> flight | reasoning=The user has provided all necessary details for flight searches, so the flight specialist should act next.
+2026-08-30 12:00:51,471 INFO     agents.flight_agent :: [pilot-T12_weather_horizon_exceeded] flight: Boston->['Reykjavik'] x1 found 3 offer(s)
+2026-08-30 12:00:54,407 INFO     httpx2 :: HTTP Request: POST https://aizex.top/v1/chat/completions "HTTP/1.1 200 OK"
+2026-08-30 12:00:54,411 INFO     agents.supervisor :: [pilot-T12_weather_horizon_exceeded] routing -> hotel | reasoning=The user has already received flight information, so the next step is to find hotel offers.
+2026-08-30 12:00:54,412 INFO     agents.hotel_agent :: [pilot-T12_weather_horizon_exceeded] hotel: ['Reykjavik'] found 3 offer(s)
+2026-08-30 12:00:56,878 INFO     httpx2 :: HTTP Request: POST https://aizex.top/v1/chat/completions "HTTP/1.1 200 OK"
+2026-08-30 12:00:56,882 WARNING  agents.supervisor :: [pilot-T12_weather_horizon_exceeded] hop budget exhausted (6) - forcing responder
+2026-08-30 12:00:56,882 INFO     agents.supervisor :: [pilot-T12_weather_horizon_exceeded] routing -> responder | reasoning=The user has provided all necessary details for the itinerary specialist to draft a day-by-day plan.
+2026-08-30 12:00:56,883 INFO     agents.responder :: [pilot-T12_weather_horizon_exceeded] responder: composing final answer
+2026-08-30 12:01:03,262 INFO     httpx2 :: HTTP Request: POST https://aizex.top/v1/chat/completions "HTTP/1.1 200 OK"
+2026-08-30 12:01:05,274 INFO     httpx2 :: HTTP Request: POST https://aizex.top/v1/chat/completions "HTTP/1.1 200 OK"
+2026-08-30 12:01:05,279 INFO     agents.supervisor :: [pilot-T13_contradiction_correction] routing -> flight | reasoning=The user has provided all necessary details to search for flight offers.
+2026-08-30 12:01:05,280 INFO     agents.flight_agent :: [pilot-T13_contradiction_correction] flight: Boston->['Paris'] x1 found 3 offer(s)
+2026-08-30 12:01:07,081 INFO     httpx2 :: HTTP Request: POST https://aizex.top/v1/chat/completions "HTTP/1.1 200 OK"
+2026-08-30 12:01:07,084 INFO     agents.supervisor :: [pilot-T13_contradiction_correction] routing -> hotel | reasoning=The user has provided all necessary details for hotel search.
+2026-08-30 12:01:07,085 INFO     agents.hotel_agent :: [pilot-T13_contradiction_correction] hotel: Missing destination and/or check-in/check-out dates - cannot search hotels yet.
+2026-08-30 12:01:08,935 INFO     httpx2 :: HTTP Request: POST https://aizex.top/v1/chat/completions "HTTP/1.1 200 OK"
+2026-08-30 12:01:08,939 INFO     agents.supervisor :: [pilot-T13_contradiction_correction] routing -> local_info | reasoning=The user has provided all necessary details for local information, which has not yet been consulted.
+2026-08-30 12:01:10,808 INFO     agents.local_info_agent :: [pilot-T13_contradiction_correction] local_info: looked up 1 destination(s)
+2026-08-30 12:01:13,562 INFO     httpx2 :: HTTP Request: POST https://aizex.top/v1/chat/completions "HTTP/1.1 200 OK"
+2026-08-30 12:01:13,566 WARNING  agents.supervisor :: [pilot-T13_contradiction_correction] hop budget exhausted (6) - forcing responder
+2026-08-30 12:01:13,566 INFO     agents.supervisor :: [pilot-T13_contradiction_correction] routing -> responder | reasoning=The user has provided all necessary details for budget calculation.
+2026-08-30 12:01:13,567 INFO     agents.responder :: [pilot-T13_contradiction_correction] responder: composing final answer
+2026-08-30 12:01:17,856 INFO     httpx2 :: HTTP Request: POST https://aizex.top/v1/chat/completions "HTTP/1.1 200 OK"
+2026-08-30 12:01:20,468 INFO     httpx2 :: HTTP Request: POST https://aizex.top/v1/chat/completions "HTTP/1.1 200 OK"
+2026-08-30 12:01:20,471 INFO     agents.supervisor :: [pilot-T13_contradiction_correction] routing -> flight | reasoning=The user has provided updated trip details for a flight from Boston to Rome on September 10, 2026.
+2026-08-30 12:01:20,473 INFO     agents.flight_agent :: [pilot-T13_contradiction_correction] flight: Boston->['Rome'] x1 found 3 offer(s)
+2026-08-30 12:01:22,608 INFO     httpx2 :: HTTP Request: POST https://aizex.top/v1/chat/completions "HTTP/1.1 200 OK"
+2026-08-30 12:01:22,611 INFO     agents.supervisor :: [pilot-T13_contradiction_correction] routing -> flight | reasoning=The user has provided updated trip details for a flight from Boston to Rome on September 10, 2026.
+2026-08-30 12:01:22,613 INFO     agents.flight_agent :: [pilot-T13_contradiction_correction] flight: Boston->['Rome'] x1 found 3 offer(s)
+2026-08-30 12:01:25,935 INFO     httpx2 :: HTTP Request: POST https://aizex.top/v1/chat/completions "HTTP/1.1 200 OK"
+2026-08-30 12:01:25,939 INFO     agents.supervisor :: [pilot-T13_contradiction_correction] routing -> flight | reasoning=The user has provided updated trip details for a flight from Boston to Rome on September 10, 2026, which requires a new flight search.
+2026-08-30 12:01:25,940 INFO     agents.flight_agent :: [pilot-T13_contradiction_correction] flight: Boston->['Rome'] x1 found 3 offer(s)
+2026-08-30 12:01:30,464 INFO     httpx2 :: HTTP Request: POST https://aizex.top/v1/chat/completions "HTTP/1.1 200 OK"
+2026-08-30 12:01:30,468 WARNING  agents.supervisor :: [pilot-T13_contradiction_correction] hop budget exhausted (6) - forcing responder
+2026-08-30 12:01:30,468 INFO     agents.supervisor :: [pilot-T13_contradiction_correction] routing -> responder | reasoning=The user has changed the destination to Rome and the date to September 10, 2026, so I will need to search for new flight options.
+2026-08-30 12:01:30,469 INFO     agents.responder :: [pilot-T13_contradiction_correction] responder: composing final answer
+2026-08-30 12:01:33,646 INFO     httpx2 :: HTTP Request: POST https://aizex.top/v1/chat/completions "HTTP/1.1 200 OK"
+
+=== condition: uniform_worker ===
+
+9/13 passed
+  [FAIL] T1_single_full_comfortable       hops= 7 elapsed= 28.15s
+           - local_info_results empty
+           - budget_summary missing
+  [PASS] T2_single_full_overbudget        hops= 7 elapsed= 18.03s
+  [PASS] T3_multi_full_comfortable        hops= 7 elapsed= 34.30s
+  [PASS] T4_single_slotfill               hops= 8 elapsed= 22.83s
+  [FAIL] T5_multi_slotfill_tight          hops= 8 elapsed= 28.98s
+           - budget_summary missing
+  [PASS] T6_rag_grounded                  hops= 3 elapsed= 10.13s
+  [PASS] T7_rag_ungrounded                hops= 3 elapsed=  9.18s
+  [FAIL] T8_domain_mix                    hops=12 elapsed= 24.69s
+           - knowledge_context missing - rag agent doesn't appear to have been consulted for turn 1's question
+  [FAIL] T9_multi_stress_5city            hops= 7 elapsed= 38.94s
+           - agent_scratchpad has 7 entries - MAX_HOPS_PER_TURN=6 should cap this within one turn
+  [PASS] T10_visa_city_phrasing           hops= 7 elapsed= 14.92s
+  [PASS] T11_visa_iso_phrasing            hops= 3 elapsed=  7.87s
+  [PASS] T12_weather_horizon_exceeded     hops= 7 elapsed= 17.93s
+  [PASS] T13_contradiction_correction     hops=14 elapsed= 30.37s
+
+Wrote 13 record(s) to pilot/results/uniform_worker.json
