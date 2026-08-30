@@ -1,0 +1,16 @@
+[
+  {"nationality": "US", "destination": "FR", "visa_required": false, "type": "Visa-free (Schengen)", "max_stay_days": 90, "notes": "ETIAS authorization expected to be required once enacted."},
+  {"nationality": "US", "destination": "JP", "visa_required": false, "type": "Visa-free", "max_stay_days": 90, "notes": "Temporary visitor status on arrival."},
+  {"nationality": "US", "destination": "CN", "visa_required": true, "type": "Tourist visa (L)", "max_stay_days": 30, "notes": "Some ports of entry offer visa-free transit for short stays."},
+  {"nationality": "US", "destination": "TH", "visa_required": false, "type": "Visa exemption", "max_stay_days": 30, "notes": "Extendable once at an immigration office."},
+  {"nationality": "US", "destination": "AE", "visa_required": false, "type": "Visa on arrival", "max_stay_days": 30, "notes": ""},
+  {"nationality": "US", "destination": "GB", "visa_required": false, "type": "Visa-free", "max_stay_days": 180, "notes": ""},
+  {"nationality": "CN", "destination": "FR", "visa_required": true, "type": "Schengen visa", "max_stay_days": 90, "notes": "Apply via a Schengen member consulate."},
+  {"nationality": "CN", "destination": "JP", "visa_required": true, "type": "Tourist visa", "max_stay_days": 90, "notes": "Group/individual tour visa categories differ."},
+  {"nationality": "CN", "destination": "TH", "visa_required": false, "type": "Visa exemption", "max_stay_days": 30, "notes": "Policy periodically renewed; verify before travel."},
+  {"nationality": "CN", "destination": "GB", "visa_required": true, "type": "Standard visitor visa", "max_stay_days": 180, "notes": ""},
+  {"nationality": "GB", "destination": "FR", "visa_required": false, "type": "Visa-free (Schengen)", "max_stay_days": 90, "notes": "Passport must have 3+ months validity beyond departure."},
+  {"nationality": "GB", "destination": "US", "visa_required": false, "type": "ESTA (Visa Waiver Program)", "max_stay_days": 90, "notes": "ESTA approval required before travel."},
+  {"nationality": "IN", "destination": "TH", "visa_required": false, "type": "Visa on arrival / exemption", "max_stay_days": 30, "notes": ""},
+  {"nationality": "IN", "destination": "AE", "visa_required": true, "type": "Tourist visa", "max_stay_days": 30, "notes": "Commonly arranged through the airline or a visa service."}
+]

@@ -2,3 +2,6 @@ backend/__pycache__/
 backend/chroma/
 backend/data/
 backend/.env
+backend/logs/
+**/__pycache__/
+.venv/

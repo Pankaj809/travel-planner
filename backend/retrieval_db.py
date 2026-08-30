@@ -20,32 +20,32 @@ from pydantic import BaseModel, Field
 from typing import List
 from langchain_core.messages import BaseMessage, AIMessage
 
-# file_path = "/home/jinyutong/nkocl_code/cuda_code.py"
-CHROMA_DIR_PATH = "./chroma"
+import config
+from logging_config import get_logger
+
+logger = get_logger(__name__)
+
 RELEVANCE_THRESHOLD = 0.5
 load_dotenv()
 
 
 def get_db(query):
     embedding_fn = OpenAIEmbeddings(
-        model="Pro/BAAI/bge-m3",
-        openai_api_key = os.environ.get("SILI_API_KEY"),
-        openai_api_base ="https://api.siliconflow.cn/v1"
+        model=config.EMBEDDING_MODEL,
+        openai_api_key = config.LLM_API_KEY,
+        openai_api_base = config.LLM_BASE_URL
     ) # 嵌入式模型
-    db_chroma = Chroma(collection_name = "chromadb", persist_directory=CHROMA_DIR_PATH, embedding_function=embedding_fn)
+    db_chroma = Chroma(collection_name = config.CHROMA_COLLECTION_NAME, persist_directory=config.CHROMA_DIR_PATH, embedding_function=embedding_fn)
 
-    print("Querying the vector db ....")
-    # Search vector DB
+    logger.debug("Querying vector db for: %r", query)
     # 返回匹配程度最高的25个块
     results1 = db_chroma.similarity_search_with_score(query, 25)
 
-    print(f"Length of results {len(results1)}")
+    logger.debug("Vector db returned %d result(s)", len(results1))
 
     if len(results1) == 0 or results1[0][1] < RELEVANCE_THRESHOLD:
         # 这一步检索了 客户的问题与当前知识库的相关性
         return 0
 
-    # context_text1 = "\n\n---\n\n".join([f"Score: {_score}\n{doc.page_content}"  for doc, _score in results1])
     context_text1 = "\n\n---\n\n".join([doc.page_content for doc, _score in results1])
-    # print(context_text1)
     return context_text1

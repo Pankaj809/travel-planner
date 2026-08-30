@@ -1,49 +1,379 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-    <title>对话演示</title>
-    <style>
-        #chat-box { border: 1px solid #ddd; padding: 10px; height: 300px; width: 400px; overflow-y: auto; }
-        #input { width: 320px; }
-        .user { color: blue; margin: 5px 0;}
-        .bot { color: green; margin: 5px 0;}
-    </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ICS Travel Assistant</title>
+<style>
+    :root {
+        --bg: #f4f6fb;
+        --card: #ffffff;
+        --primary: #4f6df5;
+        --primary-dark: #3c54d1;
+        --primary-light: #eef1ff;
+        --text: #1f2430;
+        --muted: #8a90a2;
+        --user-bubble: #4f6df5;
+        --bot-bubble: #eef1f8;
+        --border: #e4e7f0;
+    }
+    * { box-sizing: border-box; }
+    body {
+        margin: 0;
+        min-height: 100vh;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background:
+            radial-gradient(circle at 15% 10%, rgba(124, 140, 247, 0.16), transparent 45%),
+            radial-gradient(circle at 85% 90%, rgba(79, 109, 245, 0.12), transparent 45%),
+            linear-gradient(135deg, #eef1fb 0%, #f7f9fd 100%);
+        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+        color: var(--text);
+        padding: 24px;
+    }
+    #app {
+        width: 100%;
+        max-width: 520px;
+        height: min(720px, calc(100vh - 48px));
+        background: var(--card);
+        border-radius: 20px;
+        box-shadow: 0 20px 60px rgba(30, 40, 90, 0.16), 0 2px 8px rgba(30, 40, 90, 0.06);
+        display: flex;
+        flex-direction: column;
+        overflow: hidden;
+    }
+    header {
+        padding: 20px 22px;
+        background: linear-gradient(120deg, var(--primary), #7c8cf7);
+        color: #fff;
+        display: flex;
+        align-items: center;
+        gap: 14px;
+        flex-shrink: 0;
+    }
+    header .avatar {
+        width: 42px;
+        height: 42px;
+        border-radius: 12px;
+        background: rgba(255, 255, 255, 0.18);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-shrink: 0;
+    }
+    header .avatar svg { width: 22px; height: 22px; }
+    header .titles { min-width: 0; }
+    header h1 {
+        font-size: 16px;
+        margin: 0;
+        font-weight: 700;
+        letter-spacing: 0.2px;
+    }
+    header p {
+        margin: 3px 0 0;
+        font-size: 12px;
+        opacity: 0.88;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
+    header .status {
+        margin-left: auto;
+        display: flex;
+        align-items: center;
+        gap: 6px;
+        font-size: 11px;
+        opacity: 0.9;
+        flex-shrink: 0;
+    }
+    header .status .dot {
+        width: 7px;
+        height: 7px;
+        border-radius: 50%;
+        background: #5ce88f;
+        box-shadow: 0 0 0 3px rgba(92, 232, 143, 0.25);
+    }
+    #chat-box {
+        flex: 1;
+        padding: 20px 18px;
+        overflow-y: auto;
+        display: flex;
+        flex-direction: column;
+        gap: 14px;
+        background: var(--bg);
+    }
+    .row {
+        display: flex;
+        gap: 8px;
+        max-width: 88%;
+        align-items: flex-end;
+    }
+    .row.user { align-self: flex-end; flex-direction: row-reverse; }
+    .row.bot { align-self: flex-start; }
+    .bubble {
+        padding: 11px 15px;
+        border-radius: 16px;
+        font-size: 14.5px;
+        line-height: 1.55;
+        white-space: pre-wrap;
+        word-break: break-word;
+        box-shadow: 0 1px 2px rgba(30, 40, 90, 0.04);
+    }
+    .row.user .bubble {
+        background: var(--user-bubble);
+        color: #fff;
+        border-bottom-right-radius: 4px;
+    }
+    .row.bot .bubble {
+        background: var(--bot-bubble);
+        color: var(--text);
+        border-bottom-left-radius: 4px;
+    }
+    .row .icon {
+        width: 28px;
+        height: 28px;
+        border-radius: 50%;
+        flex-shrink: 0;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background: var(--card);
+        border: 1px solid var(--border);
+        color: var(--muted);
+    }
+    .row .icon svg { width: 15px; height: 15px; }
+    .row.user .icon { background: var(--primary); border-color: var(--primary); color: #fff; }
+    .meta {
+        font-size: 10.5px;
+        color: var(--muted);
+        margin-top: 4px;
+    }
+    .row.bot .meta { text-align: left; }
+    .row.user .meta { text-align: right; }
+    .typing {
+        display: inline-flex;
+        gap: 4px;
+        padding: 13px 15px;
+    }
+    .typing span {
+        width: 6px;
+        height: 6px;
+        border-radius: 50%;
+        background: var(--muted);
+        animation: blink 1.2s infinite ease-in-out;
+    }
+    .typing span:nth-child(2) { animation-delay: 0.2s; }
+    .typing span:nth-child(3) { animation-delay: 0.4s; }
+    @keyframes blink {
+        0%, 80%, 100% { opacity: 0.25; transform: scale(0.85); }
+        40% { opacity: 1; transform: scale(1); }
+    }
+    @keyframes fadeIn {
+        from { opacity: 0; transform: translateY(4px); }
+        to { opacity: 1; transform: translateY(0); }
+    }
+    .row { animation: fadeIn 0.2s ease-out; }
+    .error-bubble {
+        background: #fdecec !important;
+        color: #b3261e !important;
+    }
+    .suggestions {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 8px;
+        padding: 0 18px 4px;
+        flex-shrink: 0;
+    }
+    .chip {
+        border: 1px solid var(--border);
+        background: var(--card);
+        color: var(--text);
+        font-size: 12.5px;
+        padding: 7px 13px;
+        border-radius: 999px;
+        cursor: pointer;
+        transition: background 0.15s, border-color 0.15s, transform 0.1s;
+        white-space: nowrap;
+    }
+    .chip:hover { background: var(--primary-light); border-color: var(--primary); color: var(--primary-dark); }
+    .chip:active { transform: scale(0.96); }
+    footer {
+        padding: 14px 16px;
+        border-top: 1px solid var(--border);
+        display: flex;
+        gap: 10px;
+        background: #fff;
+        flex-shrink: 0;
+    }
+    #input {
+        flex: 1;
+        resize: none;
+        border: 1px solid var(--border);
+        border-radius: 20px;
+        padding: 11px 16px;
+        font-size: 14px;
+        font-family: inherit;
+        max-height: 96px;
+        outline: none;
+        transition: border-color 0.15s, box-shadow 0.15s;
+    }
+    #input:focus { border-color: var(--primary); box-shadow: 0 0 0 3px rgba(79, 109, 245, 0.12); }
+    #send-btn {
+        width: 44px;
+        height: 44px;
+        border-radius: 50%;
+        border: none;
+        background: var(--primary);
+        color: #fff;
+        cursor: pointer;
+        flex-shrink: 0;
+        transition: background 0.15s, transform 0.1s;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+    #send-btn svg { width: 18px; height: 18px; }
+    #send-btn:hover:not(:disabled) { background: var(--primary-dark); }
+    #send-btn:active:not(:disabled) { transform: scale(0.94); }
+    #send-btn:disabled { background: var(--muted); cursor: not-allowed; }
+    #chat-box::-webkit-scrollbar { width: 6px; }
+    #chat-box::-webkit-scrollbar-thumb { background: #cfd4e4; border-radius: 3px; }
+</style>
 </head>
 <body>
-    <h2>FastAPI 聊天窗口</h2>
-    <div id="chat-box"></div>
-    <input id="input" type="text" placeholder="输入您要说的话" onkeydown="if(event.key==='Enter'){sendMsg()}">
-    <button onclick="sendMsg()">发送</button>
+<div id="app">
+    <header>
+        <div class="avatar">
+            <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M21.5 12L3 5l2.5 6.2L3 19l18.5-7z" fill="currentColor" stroke="currentColor" stroke-width="0.5" stroke-linejoin="round"/>
+            </svg>
+        </div>
+        <div class="titles">
+            <h1>ICS Travel Assistant</h1>
+            <p>Trip planning &middot; Flights &amp; hotels &middot; Budget &middot; Weather &amp; visas</p>
+        </div>
+        <div class="status"><span class="dot"></span>Online</div>
+    </header>
+    <div id="chat-box" aria-live="polite"></div>
+    <div class="suggestions" id="suggestions">
+        <button class="chip" type="button">Plan a 5-day trip to Paris</button>
+        <button class="chip" type="button">Check flights to Tokyo</button>
+        <button class="chip" type="button">What's the weather in Rome next month?</button>
+    </div>
+    <footer>
+        <textarea id="input" rows="1" placeholder="E.g. Plan a 5-day trip from New York to Paris starting Sep 15, budget $2500"></textarea>
+        <button id="send-btn" onclick="sendMsg()" aria-label="Send">
+            <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M3.4 20.6l18.2-8.6-18.2-8.6-.1 6.5L15 12l-11.7 2.1z" fill="currentColor"/>
+            </svg>
+        </button>
+    </footer>
+</div>
 
-    <script>
-        function appendMsg(who, text) {
-            let div = document.getElementById('chat-box');
-            let p = document.createElement('div');
-            p.className = who;
-            p.innerText = (who === 'user' ? '你: ' : 'LLM: ') + text;
-            div.appendChild(p);
-            div.scrollTop = div.scrollHeight;
-        }
+<script>
+    const chatBox = document.getElementById('chat-box');
+    const input = document.getElementById('input');
+    const sendBtn = document.getElementById('send-btn');
+    const suggestions = document.getElementById('suggestions');
 
-        function sendMsg() {
-            let text = document.getElementById('input').value.trim();
-            if(!text) return;
-            appendMsg('user', text);
-            document.getElementById('input').value = "";
+    const USER_ICON = '<svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M12 12a4.5 4.5 0 100-9 4.5 4.5 0 000 9zM4 20.5c0-3.6 3.58-6.5 8-6.5s8 2.9 8 6.5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>';
+    const BOT_ICON = '<svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><rect x="4" y="7" width="16" height="12" rx="3" stroke="currentColor" stroke-width="1.8"/><path d="M12 7V4M9 3.5h6" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/><circle cx="9" cy="13" r="1.3" fill="currentColor"/><circle cx="15" cy="13" r="1.3" fill="currentColor"/></svg>';
 
-            fetch('http://127.0.0.1:8000/chat', {
+    function timestamp() {
+        const d = new Date();
+        return d.getHours().toString().padStart(2, '0') + ':' + d.getMinutes().toString().padStart(2, '0');
+    }
+
+    function appendMsg(who, text, isError) {
+        const row = document.createElement('div');
+        row.className = 'row ' + who;
+
+        const icon = document.createElement('div');
+        icon.className = 'icon';
+        icon.innerHTML = who === 'user' ? USER_ICON : BOT_ICON;
+
+        const wrap = document.createElement('div');
+        const bubble = document.createElement('div');
+        bubble.className = 'bubble' + (isError ? ' error-bubble' : '');
+        bubble.innerText = text;
+
+        const meta = document.createElement('div');
+        meta.className = 'meta';
+        meta.innerText = timestamp();
+
+        wrap.appendChild(bubble);
+        wrap.appendChild(meta);
+        row.appendChild(icon);
+        row.appendChild(wrap);
+        chatBox.appendChild(row);
+        chatBox.scrollTop = chatBox.scrollHeight;
+        return row;
+    }
+
+    function showTyping() {
+        const row = document.createElement('div');
+        row.className = 'row bot';
+        row.id = 'typing-row';
+        row.innerHTML = '<div class="icon">' + BOT_ICON + '</div>' +
+            '<div class="bubble typing"><span></span><span></span><span></span></div>';
+        chatBox.appendChild(row);
+        chatBox.scrollTop = chatBox.scrollHeight;
+    }
+
+    function hideTyping() {
+        const row = document.getElementById('typing-row');
+        if (row) row.remove();
+    }
+
+    async function sendMsg(overrideText) {
+        const text = (overrideText !== undefined ? overrideText : input.value).trim();
+        if (!text) return;
+
+        if (suggestions.parentNode) suggestions.remove();
+
+        appendMsg('user', text);
+        input.value = '';
+        input.style.height = 'auto';
+        sendBtn.disabled = true;
+        showTyping();
+
+        try {
+            const res = await fetch('/chat', {
                 method: 'POST',
-                headers: {'Content-Type':'application/json'},
-                body: JSON.stringify({text: text})
-            })
-            .then(res => res.json())
-            .then(data => {
-                appendMsg('bot', data.reply);
-            })
-            .catch(err => {
-                appendMsg('bot', '[请求失败！]');
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ text })
             });
+            if (!res.ok) throw new Error('HTTP ' + res.status);
+            const data = await res.json();
+            hideTyping();
+            appendMsg('bot', data.reply);
+        } catch (err) {
+            hideTyping();
+            appendMsg('bot', 'Something went wrong. Please try again. (' + err.message + ')', true);
+        } finally {
+            sendBtn.disabled = false;
+            input.focus();
         }
-    </script>
+    }
+
+    input.addEventListener('keydown', (event) => {
+        if (event.key === 'Enter' && !event.shiftKey) {
+            event.preventDefault();
+            sendMsg();
+        }
+    });
+
+    input.addEventListener('input', () => {
+        input.style.height = 'auto';
+        input.style.height = Math.min(input.scrollHeight, 96) + 'px';
+    });
+
+    suggestions.querySelectorAll('.chip').forEach((chip) => {
+        chip.addEventListener('click', () => sendMsg(chip.textContent));
+    });
+
+    appendMsg('bot', "Hi! I'm the ICS Travel Assistant. I can help you plan trips, check flights and hotels, work out your budget, and look up weather and visa requirements at your destination. Where would you like to go?");
+</script>
 </body>
 </html>

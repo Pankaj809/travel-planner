@@ -1,0 +1,33 @@
+flowchart TD
+    U[User / frontend] -->|"POST /chat {text}"| API["FastAPI (main.py)"]
+    API --> QD["query_data.stream_graph_updates()"]
+    QD --> MEM[("memory_store\nper-session messages + trip_constraints")]
+    QD --> GRAPH
+
+    subgraph GRAPH["LangGraph: TravelState graph (graph/build_graph.py)"]
+        SUP["Supervisor\n(orchestrator LLM: routing + slot-filling)"]
+        RAG["RAG Agent\n(worker LLM + Chroma)"]
+        FLT["Flight Agent\n(deterministic tool)"]
+        HTL["Hotel Agent\n(deterministic tool)"]
+        LOC["Local Info Agent\n(weather + visa tools)"]
+        ITN["Itinerary Agent\n(orchestrator LLM + routing tool)"]
+        BUD["Budget Agent\n(deterministic tool)"]
+        RSP["Responder\n(orchestrator LLM: final synthesis)"]
+
+        SUP -. "Command(goto=...)" .-> RAG
+        SUP -. "Command(goto=...)" .-> FLT
+        SUP -. "Command(goto=...)" .-> HTL
+        SUP -. "Command(goto=...)" .-> LOC
+        SUP -. "Command(goto=...)" .-> ITN
+        SUP -. "Command(goto=...)" .-> BUD
+        SUP -. "Command(goto=responder)" .-> RSP
+        RAG -. "Command(goto=supervisor)" .-> SUP
+        FLT -. "Command(goto=supervisor)" .-> SUP
+        HTL -. "Command(goto=supervisor)" .-> SUP
+        LOC -. "Command(goto=supervisor)" .-> SUP
+        ITN -. "Command(goto=supervisor)" .-> SUP
+        BUD -. "Command(goto=supervisor)" .-> SUP
+    end
+
+    RSP --> QD
+    QD --> API --> U

@@ -1,0 +1,22 @@
+# Versions are intentionally unpinned (no network access was available to
+# resolve/verify a lockfile at authoring time); after installing, run
+# `pip freeze > requirements.lock.txt` and commit that for reproducible
+# deploys. See docs/03-llm-infra-decision.md for provider/model rationale.
+
+fastapi
+uvicorn[standard]
+python-dotenv
+pydantic
+requests
+
+langgraph
+langchain
+langchain-core
+langchain-openai
+langchain-chroma
+langchain-community
+langchain-text-splitters
+chromadb
+pypdf
+
+copilotkit

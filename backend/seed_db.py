@@ -1,6 +1,6 @@
 from langchain_community.document_loaders import DirectoryLoader, JSONLoader
 from langchain_text_splitters import RecursiveCharacterTextSplitter
-from langchain.schema import Document
+from langchain_core.documents import Document
 from langchain_openai import OpenAIEmbeddings
 from langchain_chroma import Chroma
 from langchain_community.document_loaders import PyPDFLoader
@@ -15,10 +15,10 @@ import os
 import shutil
 # from langchain_community.embeddings.openai import OpenAIEmbeddings
 load_dotenv()
-# openai.api_key = os.environ['OPENAI_API_KEY']
 
+import config
 
-CHROMA_PATH = 'chroma'
+CHROMA_PATH = config.CHROMA_DIR_PATH
 DATA_PATH = 'data'
 
 
@@ -100,14 +100,14 @@ def save_to_chroma(chunks: list[Document]):
         shutil.rmtree(CHROMA_PATH)
 
     embedding_fn = OpenAIEmbeddings(
-        model="Pro/BAAI/bge-m3",
-        openai_api_key='REDACTED_API_KEY',
-        openai_api_base="https://api.siliconflow.cn/v1"
+        model=config.EMBEDDING_MODEL,
+        openai_api_key=config.LLM_API_KEY,
+        openai_api_base=config.LLM_BASE_URL
     )
     for i in range(0, len(chunks), 64):
         chunk = chunks[i:i+64]
-        db = Chroma.from_documents(chunk, embedding_fn, 
-                                collection_name = "chromadb",
+        db = Chroma.from_documents(chunk, embedding_fn,
+                                collection_name = config.CHROMA_COLLECTION_NAME,
                                 persist_directory=CHROMA_PATH)
 
     print(f'Saved {len(chunks)} chunks to {CHROMA_PATH}.')

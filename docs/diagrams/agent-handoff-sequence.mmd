@@ -1,0 +1,25 @@
+sequenceDiagram
+    participant User
+    participant API as FastAPI
+    participant Sup as Supervisor
+    participant Flt as Flight Agent
+    participant Loc as Local Info Agent
+    participant Itn as Itinerary Agent
+    participant Rsp as Responder
+
+    User->>API: "Plan NYC -> Paris, Sep 15-20, budget $2500"
+    API->>Sup: TravelState(messages, trip_constraints={})
+    Sup->>Sup: extract constraints, decide next=flight
+    Sup->>Flt: Command(goto=flight)
+    Flt->>Flt: search_flights(origin, dest, date)
+    Flt->>Sup: Command(goto=supervisor, flight_results=[...])
+    Sup->>Loc: Command(goto=local_info)
+    Loc->>Loc: get_weather_forecast(), get_visa_requirement()
+    Loc->>Sup: Command(goto=supervisor, local_info_results=[...])
+    Sup->>Itn: Command(goto=itinerary)
+    Itn->>Itn: order_multi_city_route(), LLM draft
+    Itn->>Sup: Command(goto=supervisor, itinerary_draft=...)
+    Sup->>Rsp: Command(goto=responder)
+    Rsp->>Rsp: synthesize final answer from all state
+    Rsp->>API: {"messages": [...]}
+    API->>User: JSON reply
